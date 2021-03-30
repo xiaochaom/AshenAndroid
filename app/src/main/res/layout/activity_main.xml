@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context="com.android.rc_test_server.MainActivity">
+        <TextView
+            android:id="@+id/ip_str"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/test_devices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restart HTTP server"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/get_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="查看内置接口接口" />
+
+        <ListView
+            android:id="@+id/get_list"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:visibility="gone">
+        </ListView>
+        <!--    </FrameLayout>-->
+
+
+    </LinearLayout>
+
+</LinearLayout>
