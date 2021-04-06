@@ -22,6 +22,8 @@ public class AshenConst {
     public static String fileSavePath = "";
     public static String className = "";
 
+    public final static String callBackTag = "callback";
+
     // 内置的文件列表,用于文件上传等基础数据
     public final static String[] fileNameList = {"1080*1080.jpg"};
 

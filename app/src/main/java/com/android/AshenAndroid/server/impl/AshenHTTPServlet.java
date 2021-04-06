@@ -88,7 +88,7 @@ public class AshenHTTPServlet implements HTTPServlet {
 
                         // 获取实际参数列表
                         int acParamsCount = acParamMap.size();
-                        if (acParamMap.containsKey("callback")) {
+                        if (acParamMap.containsKey(AshenConst.callBackTag)) {
                             acParamsCount -= 1;
                         }
 
@@ -116,8 +116,13 @@ public class AshenHTTPServlet implements HTTPServlet {
                             // 开始比较参数,参数名称顺序一致才开始转换
                             boolean paramEqual = true;
 
+                            LinkedList<String> exParamNotCallBackList = (LinkedList<String>) exParamList.clone();
+                            if (exParamList.contains(AshenConst.callBackTag)) {
+                                exParamNotCallBackList.remove(AshenConst.callBackTag);
+                            }
+
                             for (int paramIndex = 0; paramIndex < acParamList.size(); paramIndex++) {
-                                String exCurrentParamName = exParamList.get(paramIndex);
+                                String exCurrentParamName = exParamNotCallBackList.get(paramIndex);
                                 String acCurrentParamName = acParamList.get(paramIndex);
 
                                 // 如果 key 的名称不一致,则直接判断为接口请求的不正确,跳过本次
@@ -134,12 +139,12 @@ public class AshenHTTPServlet implements HTTPServlet {
 
                             // 判断请求参数中的 callback
                             boolean acCallBack = true;
-                            if (acParamMap.containsKey("callback")) {
+                            if (acParamMap.containsKey(AshenConst.callBackTag)) {
                                 for (int paramIndex = 0; paramIndex < exParamList.size(); paramIndex++) {
                                     String exCurrentParamName = exParamList.get(paramIndex);
                                     String exCurrentParamType = (String) exParamMap.get(exCurrentParamName);
-                                    String acCallBackStr = acParamMap.get("callback").toString().toLowerCase();
-                                    if (exCurrentParamName.toLowerCase().contains("callback")) {
+                                    String acCallBackStr = acParamMap.get(AshenConst.callBackTag).toString().toLowerCase();
+                                    if (exCurrentParamName.toLowerCase().contains(AshenConst.callBackTag)) {
                                         if (!exCurrentParamType.toLowerCase().contains(acCallBackStr)) {
                                             acCallBack = false;
                                         }
@@ -164,7 +169,7 @@ public class AshenHTTPServlet implements HTTPServlet {
                                 String exCurrentParamName = exParamList.get(paramIndex);
                                 String exCurrentParamType = exParamMap.get(exCurrentParamName);
                                 // callback
-                                if (exCurrentParamName.toLowerCase().contains("callback")) {
+                                if (exCurrentParamName.toLowerCase().contains(AshenConst.callBackTag)) {
                                     if (callbackMap.containsKey(exCurrentParamType)) {
                                         requestParams[paramIndex] = callbackMap.get(exCurrentParamType);
                                         continue;
@@ -206,7 +211,7 @@ public class AshenHTTPServlet implements HTTPServlet {
                             for (int paramIndex = 0; paramIndex < methodParamMap.size(); paramIndex++) {
                                 String paramName = exParamList.get(paramIndex);
                                 try {
-                                    if (paramName.toLowerCase().contains("callback")) {
+                                    if (paramName.toLowerCase().contains(AshenConst.callBackTag)) {
                                         // 处理 callback 泛型问题
                                         paramName = methodParamMap.get(paramName).split("<")[0];
                                         paramTypeList[paramIndex] = Class.forName(paramName);
